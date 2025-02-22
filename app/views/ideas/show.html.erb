@@ -6,5 +6,20 @@
   <%= link_to "Edit this idea", edit_idea_path(@idea) %> |
   <%= link_to "Back to ideas", ideas_path %>
 
-  <%= button_to "Destroy this idea", @idea, method: :delete %>
+  <%= button_to "アイディアさくじょ", @idea, method: :delete %>
 </div>
+<h2>こめんと(ありがとう)</h2>
+<% if @comments.any? %>
+  <% @comments.each do |comment| %>
+    <div>
+      <p><strong><%= comment.user_name %></strong></p>
+      <p><%= comment.body %></p>
+      <%= button_to "コメントさくじょ", idea_comment_path(@idea, comment), method: :delete, class: "btn btn-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+    </div>
+  <% end %>
+<% else %>
+  <p>No comments found.</p>
+<% end %>
+
+<h2>こめんと(書いてね)</h2>
+<%= render partial: "comments/form", locals: { idea: @idea } %>
